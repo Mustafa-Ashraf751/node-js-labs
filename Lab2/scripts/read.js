@@ -7,7 +7,16 @@ const filePath = join(__dirname, 'data.json');
 
 export async function readAll() {
   try {
-    const employees = fetch();
+    const employees = fetch('/data')
+      .then((response) => response.json)
+      .then((data) => {
+        const mainContainer = document.querySelector('.main-container');
+        data.forEach((element) => {
+          const employeeDiv = document.createElement('div');
+          employeeDiv.textContent = element;
+          mainContainer.appendChild(employeeDiv);
+        });
+      });
     const array = employees
       .map(
         (emp) =>
