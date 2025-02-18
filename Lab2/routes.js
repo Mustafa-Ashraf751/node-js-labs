@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { promises as fsPromises } from 'node:fs';
 import path from 'node:path';
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -26,6 +27,16 @@ const routeMap = {
   '/astronomy': {
     filePath: path.join(__dirname, 'templates', 'page2.html'),
     contentType: 'text/html',
+  },
+  '/astronomy/download': {
+    filePath: path.join(
+      __dirname,
+      'static',
+      '200505225212-04-fossils-and-climate-change-museum.jpg',
+    ),
+    contentType: 'application/octet-stream',
+    contentDisposition:
+      'attachment; filename="200505225212-04-fossils-and-climate-change-museum.jpg"',
   },
   '/static/200505225212-04-fossils-and-climate-change-museum.jpg': {
     filePath: path.join(
@@ -55,14 +66,67 @@ const routeMap = {
     filePath: path.join(__dirname, 'styles', 'style4.css'),
     contentType: 'text/css',
   },
+  '/employee': {
+    filePath: path.join(__dirname, 'templates', 'page5.html'),
+    contentType: 'text/html',
+  },
+  '/scripts/addEmployee.js': {
+    filePath: path.join(__dirname, 'scripts', 'addEmployee.js'),
+    contentType: 'text/javascript',
+  },
+  '/scripts/validateOptions.js': {
+    filePath: path.join(__dirname, 'scripts', 'validateOptions.js'),
+    contentType: 'text/javascript',
+  },
+  '/styles/style5.css': {
+    filePath: path.join(__dirname, 'styles', 'style5.css'),
+    contentType: 'text/css',
+  },
 };
 
-export function handleRoutes(req, res) {
+// This won't work because the server reset it every time it restarts because it's stores in memory
+// let nextId = 1;
+
+export async function handleRoutes(req, res) {
   let stream;
   const route = routeMap[req.url];
 
+  // Handle Post Request
+  if (req.url === '/employee' && req.method === 'POST') {
+    const filePath = path.join(__dirname, 'data.json');
+    try {
+      await fsPromises.access(filePath);
+    } catch {
+      await fsPromises.writeFile(filePath, '[]', 'utf8');
+    }
+    let body = '';
+    for await (const chunk of req) {
+      body += chunk;
+    }
+    const employeeData = JSON.parse(body);
+
+    const data = await fsPromises.readFile(filePath, 'utf8');
+    const employees = JSON.parse(data);
+
+    const employee = {
+      id: employees.length + 1,
+      ...employeeData,
+    };
+
+    employees.push(employee);
+    await fsPromises.writeFile(filePath, JSON.stringify(employees));
+    res.writeHead(201, { 'content-type': 'application/json' });
+    res.end(JSON.stringify(employees));
+    return;
+  }
+
+  // Handle Get Requests
   if (route) {
-    res.writeHead(200, { 'content-type': route.contentType });
+    const headers = { 'content-type': route.contentType };
+    if (route.contentDisposition) {
+      headers['content-disposition'] = route.contentDisposition;
+    }
+    res.writeHead(200, headers);
     stream = fs.createReadStream(route.filePath);
   } else {
     res.writeHead(404, { 'content-type': 'text/html' });
