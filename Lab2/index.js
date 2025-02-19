@@ -1,5 +1,5 @@
 import http from 'node:http';
-import { handleRoutes } from './routes.js';
+import {handleRoutes} from './routes.js';
 
 function Main() {
   const server = http.createServer(handleRoutes);

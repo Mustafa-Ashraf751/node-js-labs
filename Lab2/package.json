@@ -1,16 +1,16 @@
 {
   "name": "lab2",
+  "type": "module",
   "version": "1.0.0",
   "description": "Lab2",
+  "author": "Mustafa Ashraf",
+  "license": "ISC",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Mustafa Ashraf",
-  "license": "ISC",
   "devDependencies": {
-    "@antfu/eslint-config": "^4.2.1",
+    "@antfu/eslint-config": "^4.3.0",
     "@eslint/js": "^9.20.0",
     "eslint": "^9.20.1",
     "globals": "^15.15.0"

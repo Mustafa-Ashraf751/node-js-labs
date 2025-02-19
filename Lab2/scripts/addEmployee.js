@@ -1,4 +1,4 @@
-import { validateOptions } from './validateOptions.js';
+import {validateOptions} from './validateOptions.js';
 
 function addEmployee() {
   document.querySelector('.my-form').addEventListener('submit', async (e) => {
@@ -9,16 +9,16 @@ function addEmployee() {
       email: data.get('email'),
       salary: data.get('salary'),
       level: data.get('level') || 'Jr',
-      years: data.get('years') || 0,
+      years: data.get('years') || 0
     };
     try {
       validateOptions(userInputs);
       const response = await fetch('/employee', {
         method: 'POST',
         headers: {
-          'content-Type': 'application/json',
+          'content-Type': 'application/json'
         },
-        body: JSON.stringify(userInputs),
+        body: JSON.stringify(userInputs)
       });
       if (response.ok) {
         alert('Employee added successfully!');
@@ -26,7 +26,7 @@ function addEmployee() {
       }
     } catch (error) {
       console.error('Some thing wrong with message: ', error.message);
-      alert('Error submitting form error: ' + error.message);
+      alert(`Error submitting form error: ${error.message}`);
     }
   });
 }
