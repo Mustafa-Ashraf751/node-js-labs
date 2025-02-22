@@ -1,0 +1,17 @@
+body {
+  background-color: lightblue;
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.employee {
+  background-color: white;
+  padding: 30px;
+  margin: 10px;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 40px;
+}

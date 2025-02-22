@@ -1,0 +1,21 @@
+{
+  "name": "lab3",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "using express js",
+  "author": "Mustafa Ashraf",
+  "license": "ISC",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "eslint": "^9.21.0",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^4.3.0"
+  }
+}
