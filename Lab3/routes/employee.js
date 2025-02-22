@@ -14,7 +14,12 @@ const dataPath = path.join(__dirname, 'data.json');
 router.get('/', async (req, res) => {
   try {
     const data = await fs.readFile(dataPath, 'utf-8');
-    const employeeData = JSON.parse(data);
+    let employeeData = JSON.parse(data);
+    const {name} = req.query;
+    console.log(name);
+    if(name){
+      employeeData = employeeData.filter((emp)=>emp.name.toLowerCase()===name);
+    }
     res.status(200).json(employeeData);
   } catch (error) {
     res.status(500).send('Sorry something go wrong');
