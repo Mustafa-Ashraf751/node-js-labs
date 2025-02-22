@@ -1,68 +1,34 @@
 [
   {
     "id": 1,
-    "name": "mustfa",
-    "email": "m.as@gmail.com",
-    "salary": "5200",
-    "level": "Jr",
-    "years": "1",
-    "age": "25"
+    "name": "Mustafa",
+    "email": "aadw.adcdcad@gmail.com",
+    "salary": 3000,
+    "levels": "JR",
+    "years": 0
   },
   {
     "id": 2,
-    "name": "mustafa",
-    "email": "ashaej.s@gmail.com",
-    "salary": "8787",
-    "level": "Jr",
+    "name": "Ahmed Mohammed",
+    "email": "dada.adawd@gmail.com",
+    "salary": 3000,
+    "levels": "JR",
     "years": 0
   },
   {
     "id": 3,
-    "name": "mustafa",
-    "email": "ashaej.s@gmail.com",
-    "salary": "8787",
-    "level": "Jr",
+    "name": "Mohammed",
+    "email": "dada.adawd@gmail.com",
+    "salary": 3000,
+    "levels": "JR",
     "years": 0
   },
   {
     "id": 4,
-    "name": "saied",
-    "email": "ashaej.s@gmail.com",
-    "salary": "8787",
-    "level": "Jr",
-    "years": 0
-  },
-  {
-    "id": 5,
-    "name": "mustfa",
-    "email": "m.as@gmail.com",
-    "salary": "4000",
-    "level": "Jr",
-    "years": "1",
-    "age": "25"
-  },
-  {
-    "id": 8,
-    "name": "Mustafa Ashraf",
-    "email": "mustafaashraf123@yahoo.com",
-    "salary": "40000",
-    "level": "Jr",
-    "years": "0"
-  },
-  {
-    "id": 9,
-    "name": "Mustafa Ashraf",
-    "email": "securekey1001@outlook.com",
-    "salary": "40000",
-    "level": "Jr",
-    "years": "0"
-  },
-  {
-    "id": 10,
-    "name": "Ahmed",
-    "email": "securekey1001@outlook.com",
-    "salary": "40000",
-    "level": "Jr",
+    "name": "Hassan",
+    "email": "dada.adawd@gmail.com",
+    "salary": 3000,
+    "levels": "JR",
     "years": 0
   }
 ]

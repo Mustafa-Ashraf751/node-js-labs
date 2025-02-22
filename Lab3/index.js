@@ -1,14 +1,17 @@
-import bodyParser from 'body-parser';
 import express from 'express';
-import employeeRouter from './routes/employee.js';
+import router from './routes/index.js';
 
 const app = express();
 
 app.use(express.json());
 
-app.use(bodyParser.json());
+app.use(express.static('public'));
 
-app.use(employeeRouter);
+app.set('view engine', 'pug');
+
+app.set('views', './templates');
+
+app.use(router);
 
 app.listen(3000, () => {
   console.log('Server is running on localhost:3000');
