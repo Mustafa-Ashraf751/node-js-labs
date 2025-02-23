@@ -1,0 +1,12 @@
+html 
+  head 
+      link(rel='stylesheet', href='/styles/style1.css')
+  body 
+   div.main-container 
+     each employee in employeeData
+      div.employee
+          p Name: #{employee.name}
+          p Email: #{employee.email}
+          p Salary: #{employee.salary}
+          p Level: #{employee.levels}
+          p Years: #{employee.years}
