@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Fetch Example</title>
+</head>
+
+<body>
+  <button onclick="fetchData()">Fetch Data</button>
+  <div id="result"></div>
+
+  <script>
+    async function fetchData() {
+      try {
+        const response = await fetch('http://localhost:3000/employees/');
+        const data = await response.json();
+        document.getElementById('result').textContent = JSON.stringify(data);
+      } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('result').textContent = 'Failed to fetch data!';
+      }
+    }
+  </script>
+</body>
+
+</html>

@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import errorHandler from './middleware/errorHandler.js';
 import router from './routes/index.js';
 import 'dotenv/config';
+import cors from 'cors';
 
 
 const port = process.env.PORT || 3000;
@@ -27,6 +28,17 @@ mongoose
     console.error('Error connecting to MongoDB Atlas:', err);
     process.exit(1);
   });
+
+const allowedOrigins = ['http://localhost:5501','http://127.0.0.1:5501'];  
+
+app.use(
+  cors({
+    origin:allowedOrigins,
+    methods:['GET','POST','PUT','DELETE'],
+    allowedHeaders:['Content-type','Authorization'],
+    credentials:true
+  })
+)  
 
 app.use(router);
 
