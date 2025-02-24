@@ -1,38 +1,38 @@
-import mongoose, {Schema} from 'mongoose';
+import mongoose from 'mongoose';
 
-const profileSchema = new Schema({
+const profileSchema = new mongoose.Schema({
   empId: {
-    type:Schema.Types.ObjectId,
-    required:true,
-    unique:true,
-    ref:'Employees'
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    unique: true,
+    ref: 'Employees'
   },
-  title:{
-    type:String,
-    required:true
+  title: {
+    type: String,
+    required: true
   },
-  description:{
-    type:String,
-    required:true
+  description: {
+    type: String,
+    required: true
   },
-  yearOfExperience:{
-    default:0
+  yearOfExperience: {
+    type: Number,
+    default: 0
   },
-  department:{
-    type:String,
-    required:true
+  department: {
+    type: String,
+    required: true
   },
-  phone:{
-    type:String,
-    required:true
-  },email:{
-    required:true,
-    unique:true,
-    match:[/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      'Please enter a valid email address']
+  phone: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    match: [/^[\w.%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i, 'Please enter a valid email address']
   }
 });
 
-const Profiles = mongoose.model('Profiles',profileSchema);
-
-export default Profiles;
+export default profileSchema;

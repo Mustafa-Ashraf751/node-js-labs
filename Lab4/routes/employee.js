@@ -1,10 +1,15 @@
 import express from 'express';
 import {employeeController} from '../controllers/index.js';
-
+import {authenticate} from '../middleware/authentication.js';
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.post('/login', async (req, res) => {
+  const token = await employeeController.loginUser(req.body);
+  res.json({token});
+});
+
+router.get('/', authenticate, async (req, res) => {
   let employeeData = await employeeController.getAll();
   const {firstName} = req.query;
   if (firstName) {
@@ -13,30 +18,30 @@ router.get('/', async (req, res) => {
   res.json(employeeData);
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', authenticate, async (req, res) => {
   const employee = await employeeController.getById(req.params.id);
   res.json(employee);
 });
 
-router.post('/', async (req, res) => {
-    const data = req.body;
-    const employees = await employeeController.createEmployee(data);
-    res.status(201).json(employees);
+router.post('/', authenticate, async (req, res) => {
+  const data = req.body;
+  const employees = await employeeController.createEmployee(data);
+  res.status(201).json(employees);
 });
 
-router.delete('/:id', async (req, res) => {
-    const employee = employeeController.deleteById(req.params.id);
-    res.json({message: 'Employee deleted successfully'});
+router.delete('/:id', authenticate, async (req, res) => {
+  await employeeController.deleteById(req.params.id);
+  res.json({message: 'Employee deleted successfully'});
 });
 
-router.patch('/:id', async (req, res) => {
-    const employee = await employeeController.patchById(req.params.id, req.body);
-    res.json(employee);
+router.patch('/:id', authenticate, async (req, res) => {
+  const employee = await employeeController.patchById(req.params.id, req.body);
+  res.json(employee);
 });
 
-router.get('/:id/leave',(req,res)=>{
-  const leaves = employeeController.getLeavesByEmployeeId(req.params.id);
+router.get('/:id/leaves', authenticate, async (req, res) => {
+  const leaves = await employeeController.getLeavesByEmployeeId(req.params.id);
   res.json(leaves);
-})
+});
 
 export default router;

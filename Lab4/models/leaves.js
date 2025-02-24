@@ -2,9 +2,9 @@ import mongoose, {Schema} from 'mongoose';
 
 const leavesSchema = new Schema({
   empId: {
-    type:Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     required: true,
-    ref:'Employees'
+    ref: 'Employees'
   },
   type: {
     type: String,

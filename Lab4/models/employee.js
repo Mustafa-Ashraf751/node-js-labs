@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-
+import mongoose from 'mongoose';
+import profileSchema from './profile.js';
 
 const employeeSchema = mongoose.Schema({
   username: {
@@ -48,34 +48,32 @@ const employeeSchema = mongoose.Schema({
     type: String,
     required: true,
     minLength: 8
-  }
+  },
+  profile: profileSchema
 }, {
-  timestamps: true,
-  toJSON:{virtuals:true},
-  toObject:{virtuals:true}
+  timestamps: true
 });
 
-
-
-
-employeeSchema.pre('save',function(next){
-  this.password = bcrypt.hashSync(this.password,12);
+employeeSchema.pre('save', function (next) {
+  this.password = bcrypt.hashSync(this.password, 12);
   next();
 });
 
+employeeSchema.set('toJSON', {
+  virtuals: true,
+  transform: (doc, {__v, password, ...rest}, options) => rest
+});
 
+employeeSchema.methods.comparePasswords = function (password) {
+  return bcrypt.compareSync(password, this.password);
+};
 
-employeeSchema.set('toJSON',{
-  transform:(doc,{__v,password,...rest},options)=>rest
-})
-
-employeeSchema.virtual('age').get(function(){
+employeeSchema.virtual('age').get(function () {
   const today = new Date();
   const birthDate = new Date(this.dob);
-  let age = today.getFullYear() - birthDate.getFullYear();
-  console.log(age);
+  const age = today.getFullYear() - birthDate.getFullYear();
   return age;
-})
+});
 
 const Employees = mongoose.model('Employees', employeeSchema);
 export default Employees;
