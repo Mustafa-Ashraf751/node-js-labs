@@ -1,8 +1,11 @@
+import 'express-async-errors';
 import process from 'node:process';
 import express from 'express';
 import mongoose from 'mongoose';
+import errorHandler from './middleware/errorHandler.js';
 import router from './routes/index.js';
 import 'dotenv/config';
+
 
 const port = process.env.PORT || 3000;
 
@@ -11,8 +14,6 @@ const app = express();
 app.use(express.json());
 
 app.use(express.static('public'));
-
-console.log(process.env.MONGODB_URI);
 
 mongoose
   .connect(process.env.MONGODB_URI, {
@@ -28,6 +29,9 @@ mongoose
   });
 
 app.use(router);
+
+app.use(errorHandler);
+
 
 app.listen(port, () => {
   console.log('Server is running on localhost:3000');

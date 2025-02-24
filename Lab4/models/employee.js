@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+
 
 const employeeSchema = mongoose.Schema({
   username: {
@@ -48,9 +50,32 @@ const employeeSchema = mongoose.Schema({
     minLength: 8
   }
 }, {
-  timestamps: true
+  timestamps: true,
+  toJSON:{virtuals:true},
+  toObject:{virtuals:true}
 });
 
-const Employees = mongoose.model('Employees', employeeSchema);
 
+
+
+employeeSchema.pre('save',function(next){
+  this.password = bcrypt.hashSync(this.password,12);
+  next();
+});
+
+
+
+employeeSchema.set('toJSON',{
+  transform:(doc,{__v,password,...rest},options)=>rest
+})
+
+employeeSchema.virtual('age').get(function(){
+  const today = new Date();
+  const birthDate = new Date(this.dob);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  console.log(age);
+  return age;
+})
+
+const Employees = mongoose.model('Employees', employeeSchema);
 export default Employees;
