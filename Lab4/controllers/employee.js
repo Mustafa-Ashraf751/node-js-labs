@@ -25,7 +25,7 @@ const createEmployee = async (data) => {
 
 const getAll = async () => {
   const employees = await Employees.find()
-    .select('_id firstName age')
+    // .select('_id firstName age')
     .exec();
   return employees;
 };

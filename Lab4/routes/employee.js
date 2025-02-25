@@ -1,5 +1,6 @@
 import express from 'express';
 import {employeeController} from '../controllers/index.js';
+import {AppError} from '../middleware/AppError.js';
 import {authenticate} from '../middleware/authentication.js';
 
 const router = express.Router();
@@ -19,6 +20,7 @@ router.get('/', authenticate, async (req, res) => {
 });
 
 router.get('/:id', authenticate, async (req, res) => {
+  if (req.params.id !== req.user._id) throw new AppError('Access Denied please try again!', 403);
   const employee = await employeeController.getById(req.params.id);
   res.json(employee);
 });
@@ -30,16 +32,19 @@ router.post('/', authenticate, async (req, res) => {
 });
 
 router.delete('/:id', authenticate, async (req, res) => {
+  if (req.params.id !== req.user._id) throw new AppError('Access Denied please try again!', 403);
   await employeeController.deleteById(req.params.id);
   res.json({message: 'Employee deleted successfully'});
 });
 
 router.patch('/:id', authenticate, async (req, res) => {
+  if (req.params.id !== req.user.id) throw new AppError('Access Denied please try again!', 403);
   const employee = await employeeController.patchById(req.params.id, req.body);
   res.json(employee);
 });
 
 router.get('/:id/leaves', authenticate, async (req, res) => {
+  if (req.params.id !== req.user._id) throw new AppError('Access Denied please try again!', 403);
   const leaves = await employeeController.getLeavesByEmployeeId(req.params.id);
   res.json(leaves);
 });

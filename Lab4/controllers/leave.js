@@ -13,15 +13,18 @@ const updateLeave = async (id, data) => {
   if (invalidKeys.length > 0) {
     throw new AppError(`Invalid keys detected: ${invalidKeys.join(', ')}`, 422);
   }
-  const updatedLeave = await Leaves.findByIdAndUpdate(id, data, {runValidators: true});
+  const updatedLeave = await Leaves.findByIdAndUpdate(id, data, {runValidators: true}).exec();
   if (!updatedLeave) {
     throw new AppError('Leave not found try again!', 404);
   }
   return updatedLeave;
 };
 
-const getAll = async (skip, limit, status) => {
-  const filter = status ? {status} : {};
+const getAll = async (skip, limit, status, id) => {
+  const filter = {
+    empId: id,
+    ...(status && {status})
+  };
   const leaves = await Leaves.find(filter).skip(skip).limit(limit).exec();
   if (!leaves) {
     throw new AppError('No leaves found please try again!', 404);

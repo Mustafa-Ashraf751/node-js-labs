@@ -1,10 +1,11 @@
+/* eslint-disable perfectionist/sort-imports */
 import process from 'node:process';
 import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
 import errorHandler from './middleware/errorHandler.js';
-import router from './routes/index.js';
 import 'express-async-errors';
+import router from './routes/index.js';
 import 'dotenv/config';
 
 const port = process.env.PORT || 3000;
